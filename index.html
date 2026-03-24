@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Hotel de Insectos</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #fff;
+      height: 600vh;
+    }
+
+    #sticky {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #fff;
+    }
+
+    video {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="sticky">
+    <video id="vid" src="hotel.mp4" preload="auto" muted playsinline></video>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <script>
+    gsap.registerPlugin(ScrollTrigger);
+
+    const vid = document.getElementById('vid');
+    const duration = 5.92;
+
+    vid.addEventListener('loadedmetadata', () => {
+      vid.currentTime = 0;
+
+      const proxy = { time: 0 };
+
+      gsap.to(proxy, {
+        time: duration,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: 'body',
+          start: 'top top',
+          end: 'bottom bottom',
+          scrub: 1,
+        },
+        onUpdate: () => {
+          vid.currentTime = proxy.time;
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
